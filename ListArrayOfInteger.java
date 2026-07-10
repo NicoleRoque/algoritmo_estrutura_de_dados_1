@@ -4,7 +4,7 @@ public class ListArrayOfInteger {
     //atributos 
     
     private Integer [] vetor;
-    private int size;
+    private int count;
    
 
     /**
@@ -17,10 +17,18 @@ public class ListArrayOfInteger {
 
     /**
      * Retorna a quantidade de elementos armazenados na lista.
-     * @return número de elementos da lista
+     * @return tamanho total da lista
      */
     public int size(){
         return vetor.length;
+    }
+
+    /** 
+     * Retorna a quantidade de elementos inclusos na lista.
+    * @return números de elementos inseridos na lista 
+    */
+    public int count(){
+        return this.count;
     }
 
     /**
@@ -28,7 +36,15 @@ public class ListArrayOfInteger {
      * @param element elemento a ser adicionado
      */
     public void add(Integer element){
-
+        if(count < vetor.length){ //verifica se tem espaço na lista 
+          for(int i = 0; i<vetor.length; i++){ //percorre todo vetor
+            if(vetor[i] == null){ //verifica se existe uma posição nula
+                vetor[i] = element; //se existir adiciona o elemento
+                count++; //incrementa o count
+                break; //para o caminhamento do vetor, garante que o elemento seja adicionado apenas uma vez
+            }
+          }
+        }
     }
 
     /**
