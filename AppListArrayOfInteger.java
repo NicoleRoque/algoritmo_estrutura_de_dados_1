@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class AppListArrayOfInteger{
     public static void main(String args[]){
         Scanner in = new Scanner(System.in);
-
-        
+        ListArrayOfInteger teste1 = new ListArrayOfInteger(5);
+        System.out.println("Verificar o tamanho do meu vetor " + teste1.size()); //funcionando!
     }
 }
