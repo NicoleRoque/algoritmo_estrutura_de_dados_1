@@ -102,10 +102,16 @@ public class ListArrayOfInteger {
      * @return true se o elemento foi encontrado e removido, false caso contrário
      */
     public boolean remove(Integer element){
-        if (element == null) {
-            throw new NullPointerException(" Este elemento não existe no vetor, e por isso, não pode ser removido ");
+        Integer index = indexOf(element); //cria uma variavel com o index do elemento
+        if (element == -1) { //se o elemento for invalido
+            return false;  //retorne falso
         }
-        return false;
+        for (int i = index; i < count - 1; i++) { //percorre do index até count-1
+            vetor[i] = vetor[i + 1]; //todos os elementos andam uma casa pra trás
+        }
+        vetor[count - 1] = null; //count-1 recebe null
+        count--; //decrementa o count
+        return true; //retorna verdadeiro
     }
 
     /**
@@ -115,7 +121,16 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer removeByIndex(int index){
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException(" Posição inválida");
+        }
+        Integer elementOld = vetor[index]; //guarda o valor do index
+        for (int i = index; i < count - 1; i++) { //o for percorre da posição até uma posição antes do count
+            vetor[i] = vetor[i + 1]; //os elementos do vetor andam uma casa
+        }
+        vetor[count - 1] = null; //a ultima posição recebe null
+        count--; //decrementa o count
+        return elementOld; //retorna o elemento removido
     }
 
     /**
@@ -180,7 +195,10 @@ public class ListArrayOfInteger {
      * Remove todos os elementos da lista.
      */
     public void clear(){
-
+        for (int i = 0; i < count; i++) {
+            vetor[i] = null;
+        }
+        count = 0;
     }
 
     /**
@@ -252,8 +270,10 @@ public class ListArrayOfInteger {
      * @param outraLista lista utilizada para realizar a intersecção
      * @return uma nova lista contendo a intersecção das listas
      */
-    public ListArrayOfInteger intersec(ListArrayOfInteger outraLista){
-        return null;
+    public ListArrayOfInteger intersec(ListArrayOfInteger outraLista){ //terminar
+        ListArrayOfInteger thirdList = new ListArrayOfInteger(count + outraLista.count);
+
+        return thirdList;
     }
 
     /**
