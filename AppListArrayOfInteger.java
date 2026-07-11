@@ -10,6 +10,10 @@ public class AppListArrayOfInteger{
         teste1.add(3);
         teste1.add(1);
         teste1.add(4, 5); //funcionando
+        System.out.println(teste1.toString()); //funcionando
+        teste1.reverse();  //funcionando
+        System.out.println(teste1.toString()); //funcionando
+       /*System.out.println("quantas vezes o elemento aparece na lista " + teste1.countOccurrences(7)); //funcionando!
         System.out.println( "A primeira posição do elemento foi na posição "+ teste1.indexOf(3)); //funcionando!
         System.out.println(teste1.toString()); //funcionando
         System.out.println( teste1.get(0));//funcionando
@@ -17,7 +21,7 @@ public class AppListArrayOfInteger{
         
         //System.out.println(" Troca o elemento e retorna o elemento antigo " + teste1.set(0, 6));
        // System.out.println( "Retorna o elemento da posição escolhida " + teste1.get(0));//funcionando
-       // System.out.println("Verifica se os elementos foram adicionados pelo count " + teste1.count()); //funcionando!
+       // System.out.println("Verifica se os elementos foram adicionados pelo count " + teste1.count()); //funcionando!*/
 
         
 

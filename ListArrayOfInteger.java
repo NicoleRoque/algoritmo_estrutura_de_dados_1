@@ -199,7 +199,16 @@ public class ListArrayOfInteger {
      * Inverte a ordem dos elementos armazenados na lista.
      */
     public void reverse(){
+        int inicio = 0; //cria uma variavel para o inicio
+        int fim = vetor.length - 1; //cria uma variavel para o fim
+        while (inicio < fim) { //repete quanto o inicio for menor que o mfin
+            int aux = vetor[inicio];
+            vetor[inicio] = vetor[fim];
+            vetor[fim] = aux;
 
+            inicio++; //incrementa o começo
+            fim--; //decrmenta o  final
+        }
     }
 
     /**
@@ -208,7 +217,13 @@ public class ListArrayOfInteger {
      * @return quantidade de ocorrências do elemento
      */
     public int countOccurrences(int element){
-        return -1;
+        int contador = 0;
+        for (int i = 0; i < vetor.length; i++) {
+            if (vetor[i].equals(element)) {
+                contador ++;
+            }
+        }
+        return contador;
     }
 
     /**
@@ -243,11 +258,7 @@ public class ListArrayOfInteger {
      * @return uma nova lista com os elementos das duas listas ordenados
      */
     public ListArrayOfInteger merge(ListArrayOfInteger outraLista){
-        ListArrayOfInteger terceiraLista = new ListArrayOfInteger(this.count + outraLista.count);
-
-        for(int i = 0; i < terceiraLista.size(); i++){
-            
-        }
+       
         return null;
     }
 
