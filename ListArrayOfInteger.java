@@ -192,7 +192,20 @@ public class ListArrayOfInteger {
      * @throws IllegalArgumentException se (fromIndex > toIndex)
      */
     public Integer[] subList(int fromIndex, int toIndex){
-        return null;
+        if (fromIndex < 0 || toIndex > size()) {
+            throw new IndexOutOfBoundsException(" O valor dos indexs não são válidos ");
+        }
+        if (fromIndex > toIndex) {
+            throw new IllegalArgumentException(" O index inicial é maior que o final, valores invalidos");
+        }
+
+        Integer secondList [] = new Integer[toIndex - fromIndex];
+        
+        for (int i = 0; i < secondList.length; i++) {
+                secondList[i] = vetor[fromIndex];
+                fromIndex ++;
+        }
+        return secondList;
     }
 
     /**

@@ -1,5 +1,7 @@
 //utilização da main para testar os métodos implementados em ListArrayOfInteger
 
+import java.lang.reflect.Array;
+
 public class AppListArrayOfInteger{
     public static void main(String args[]){
         ListArrayOfInteger teste1 = new ListArrayOfInteger(5);
@@ -9,7 +11,9 @@ public class AppListArrayOfInteger{
         teste1.add(2);
         teste1.add(3);
         teste1.add(1);
-        teste1.add(4, 5); //funcionando
+        
+        System.out.println(java.util.Arrays.toString(teste1.subList(1, 3 ))); //funcionando!
+       /*teste1.add(4, 5); //funcionando
         System.out.println(teste1.toString()); //funcionando
         teste1.reverse();  //funcionando
         System.out.println(teste1.toString()); //funcionando
