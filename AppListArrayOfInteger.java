@@ -1,14 +1,25 @@
 //utilização da main para testar os métodos implementados em ListArrayOfInteger
-import java.util.Scanner;
+
 public class AppListArrayOfInteger{
     public static void main(String args[]){
-        Scanner in = new Scanner(System.in);
         ListArrayOfInteger teste1 = new ListArrayOfInteger(5);
         System.out.println("Verificar o tamanho do meu vetor " + teste1.size()); //funcionando!
 
         teste1.add(1);
         teste1.add(2);
-        System.out.println("Verifica se os elementos foram adicionados pelo count" + teste1.count()); //funcionando!
+        teste1.add(3);
+        teste1.add(1);
+        teste1.add(4, 5); //funcionando
+        System.out.println( "A primeira posição do elemento foi na posição "+ teste1.indexOf(3)); //funcionando!
+        System.out.println(teste1.toString()); //funcionando
+        System.out.println( teste1.get(0));//funcionando
+        System.out.println(teste1.isEmpty()); //funcionando
+        
+        //System.out.println(" Troca o elemento e retorna o elemento antigo " + teste1.set(0, 6));
+       // System.out.println( "Retorna o elemento da posição escolhida " + teste1.get(0));//funcionando
+       // System.out.println("Verifica se os elementos foram adicionados pelo count " + teste1.count()); //funcionando!
+
+        
 
     }
 }

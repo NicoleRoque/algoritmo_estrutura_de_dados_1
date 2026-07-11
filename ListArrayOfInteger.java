@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 // Implementação de uma lista utilizando vetor
 public class ListArrayOfInteger {
     //atributos 
@@ -55,6 +56,14 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index > size())
      */
     public void add(int index, Integer element){
+        if (index < 0 || index >= size()) { //index invalido
+            throw new IndexOutOfBoundsException("Posição do index invalida "); //lança uma exceção
+        }
+        if (vetor[index] != null) { //se a posição que eu estou tentando inserir esta ocupada 
+            throw new IllegalStateException(" Posição já ocupada, não é possível inserir "); //lança a exceção
+        }
+        vetor[index] = element; //adiciona o elemento na posição do index
+        count++; //incrementa o count
 
     }
 
@@ -65,7 +74,10 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer get(int index){
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException(" Posição do index invalida");
+        }
+        return vetor[index];
     }
 
     /**
@@ -76,7 +88,12 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer set(int index, Integer element){
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException(" Posição do index invalida");
+        }
+        Integer elementOld = vetor[index]; //cria uma variavel que vai receber o elemento anterior
+        vetor[index] = element; //coloca o valor novo na posição
+        return elementOld;
     }
 
     /**
@@ -85,6 +102,9 @@ public class ListArrayOfInteger {
      * @return true se o elemento foi encontrado e removido, false caso contrário
      */
     public boolean remove(Integer element){
+        if (element == null) {
+            throw new NullPointerException(" Este elemento não existe no vetor, e por isso, não pode ser removido ");
+        }
         return false;
     }
 
@@ -103,6 +123,9 @@ public class ListArrayOfInteger {
      * @return true se a lista não possui elementos, false caso contrário
      */
     public boolean isEmpty(){
+        if (count == 0) { //se o count for zero a lista esta vazia
+            return true; //retorna verdadeiro
+        }
         return false;
     }
 
@@ -112,6 +135,11 @@ public class ListArrayOfInteger {
      * @return true se o elemento estiver na lista, false caso contrário
      */
     public boolean contains(Integer element){
+        for(int i = 0; i < vetor.length; i++){
+            if (vetor[i].equals(element)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -140,6 +168,11 @@ public class ListArrayOfInteger {
      * @return índice do elemento ou -1 caso não seja encontrado
      */
     public int indexOf(Integer element){
+        for(int i = 0; i < vetor.length; i++){
+            if (vetor[i].equals(element)) {
+                return i;
+            }
+        }
         return -1;
     }
 
@@ -210,6 +243,11 @@ public class ListArrayOfInteger {
      * @return uma nova lista com os elementos das duas listas ordenados
      */
     public ListArrayOfInteger merge(ListArrayOfInteger outraLista){
+        ListArrayOfInteger terceiraLista = new ListArrayOfInteger(this.count + outraLista.count);
+
+        for(int i = 0; i < terceiraLista.size(); i++){
+            
+        }
         return null;
     }
 
@@ -219,6 +257,6 @@ public class ListArrayOfInteger {
      */
     @Override
     public String toString(){
-        return "";
+        return "Elementos da lista  " + Arrays.toString(vetor) ;
     }
 }
