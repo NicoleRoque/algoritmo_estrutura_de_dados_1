@@ -8,20 +8,23 @@ public class AppListArrayOfInteger{
 
 
         teste1.add(1);
-        teste1.add(62);
-        teste1.add(0);
-        teste1.add(10);
+        teste1.add(2);
+        teste1.add(4);
+        teste1.add(5);
         teste2.add(1);
         teste2.add(5);
         teste2.add(9);
         teste2.add(0);
 
-        System.out.println(teste1.merge(teste2));
-        /* teste1.unique();
+        teste1.addIncreasingOrder(8); //funcionando
+        
         System.out.println(teste1.toString());
-        System.out.println(teste1.intersec(teste2));
+       /* System.out.println(teste1.intersec(teste2)); //funcionando
      
-        /* teste1.addIncreasingOrder(20);
+        System.out.println(teste1.merge(teste2));//funcionando
+        teste1.unique();
+        System.out.println(teste1.toString())
+         teste1.addIncreasingOrder(20);
         System.out.println(teste1.toString() + teste1.count());
         System.out.println(java.util.Arrays.toString(teste1.subList(1, 3 ))); //funcionando!
        teste1.add(4, 5); //funcionando

@@ -56,13 +56,13 @@ public class ListArrayOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index > size())
      */
     public void add(int index, Integer element){
-        if (index < 0 || index >= size()) { //index invalido
+        if (index < 0 || index > size()) { //index invalido
             throw new IndexOutOfBoundsException("Posição do index invalida "); //lança uma exceção
         }
-        if (vetor[index] != null) { //se a posição que eu estou tentando inserir esta ocupada 
-            throw new IllegalStateException(" Posição já ocupada, não é possível inserir "); //lança a exceção
+        for (int i = count - 1; i >= index; i--) { //percorre a lista do final até a posição igual ao index, decrementando
+            vetor[i + 1] = vetor[i]; //muda os elementos de posição 
         }
-        vetor[index] = element; //adiciona o elemento na posição do index
+        vetor[index] = element; //insere o elemento no local
         count++; //incrementa o count
 
     }
@@ -164,7 +164,7 @@ public class ListArrayOfInteger {
      * @return true se o elemento estiver na lista, false caso contrário
      */
     public boolean containsRecursivo(Integer element){
-        return false;
+        return containsRecursivoAux(element, 0);
     }
 
     /**
@@ -174,7 +174,16 @@ public class ListArrayOfInteger {
      * @return true se o elemento for encontrado, false caso contrário
      */
     private boolean containsRecursivoAux(Integer element, int i){
-        return false;
+        if (i == count) {
+            return false;
+        }
+
+        if(vetor[i].equals(element)){
+            return true;
+        }
+
+        return containsRecursivoAux(element, i + 1);
+        
     }
 
     /**
@@ -183,7 +192,7 @@ public class ListArrayOfInteger {
      * @return índice do elemento ou -1 caso não seja encontrado
      */
     public int indexOf(Integer element){
-        for(int i = 0; i < vetor.length; i++){
+        for(int i = 0; i < count; i++){
             if (vetor[i].equals(element)) {
                 return i;
             }
@@ -231,9 +240,9 @@ public class ListArrayOfInteger {
      */
     public void reverse(){
         int inicio = 0; //cria uma variavel para o inicio
-        int fim = vetor.length - 1; //cria uma variavel para o fim
+        int fim = count - 1; //cria uma variavel para o fim
         while (inicio < fim) { //repete quanto o inicio for menor que o mfin
-            int aux = vetor[inicio];
+            Integer aux = vetor[inicio];
             vetor[inicio] = vetor[fim];
             vetor[fim] = aux;
 
@@ -262,9 +271,18 @@ public class ListArrayOfInteger {
      * @param element elemento a ser inserido
      */
     public void addIncreasingOrder(Integer element){
-        int index = 0;
-        
-    
+        if (count == vetor.length) {
+            throw new IllegalStateException("A lista está cheia.");
+        }
+       int posicaoDesejada = 0;
+       while (posicaoDesejada < count && vetor[posicaoDesejada] < element) {
+            posicaoDesejada++;
+       }
+       for (int i = count - 1; i >= posicaoDesejada; i--) {
+            vetor[i + 1] = vetor [i];
+       }
+       vetor[posicaoDesejada] = element;
+       count++;
     }
 
     /**
@@ -272,23 +290,20 @@ public class ListArrayOfInteger {
      * @param outraLista lista utilizada para realizar a intersecção
      * @return uma nova lista contendo a intersecção das listas
      */
-    public ListArrayOfInteger intersec(ListArrayOfInteger outraLista){ //terminar
-        int tamanho = 0;
-        if (this.count < outraLista.count) {
-             tamanho = this.count;
+    public ListArrayOfInteger intersec(ListArrayOfInteger outraLista){ 
+        int tamanho;
+        if(this.count() > outraLista.count()){
+            tamanho = outraLista.count();
         }
         else
-            tamanho = outraLista.count;
+            tamanho = this.count();
 
-        
         ListArrayOfInteger thirdList = new ListArrayOfInteger(tamanho);
-
-        for (int i = 0; i < outraLista.size(); i++) {
-            if (this.contains(outraLista.get(i))) {
-                thirdList.add(outraLista.get(i));
+        for(int i = 0; i < this.count(); i++){
+            if(outraLista.contains(get(i))){
+                thirdList.add(get(i));
             }
         }
-
         return thirdList;
     }
 
@@ -297,8 +312,9 @@ public class ListArrayOfInteger {
      * mantendo apenas uma ocorrência de cada elemento.
      */
     public void unique(){
-      for (int j = 0; j < count; j++) {
-       while(countOccurrences(get(j)) > 1) {
+       int j = 0;
+       while(j < count) {
+            while(countOccurrences(get(j)) > 1) {
                 remove(get(j));
                 
             }
@@ -319,16 +335,16 @@ public class ListArrayOfInteger {
         for (int i = 0; i < outraLista.count(); i++) {
             thirdList.add(outraLista.get(i));
         }
-        for (int i = 0; i < (this.count + outraLista.count) - 1; i++) {
-            int min = thirdList.indexOf(get(i));
+        for (int i = 0; i < thirdList.count() - 1; i++) {
+            int min = i;
 
-            for (int j = i + 1; j < this.count + outraLista.count; j++) {
-                if (min > thirdList.get(j) ) {
+            for (int j = i + 1; j < thirdList.count(); j++) {
+                if (thirdList.get(min) > thirdList.get(j) ) {
                     min = j;
-                }
+                }   
             }
             Integer aux = thirdList.get(i);
-            thirdList.set(i,get(min));
+            thirdList.set(i,thirdList.get(min));
             thirdList.set(min, aux);
         }
         return thirdList;
