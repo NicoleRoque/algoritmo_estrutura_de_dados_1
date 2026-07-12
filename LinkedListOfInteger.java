@@ -29,7 +29,10 @@ public class LinkedListOfInteger {
      * Construtor da lista.
      */
     public LinkedListOfInteger() {
-
+        //faz todos os elementos receberem nulo
+        this.head = null;
+        this.tail = null;
+        this.count = 0;
     }
 
     /**
@@ -37,6 +40,9 @@ public class LinkedListOfInteger {
      * @return true se a lista nao contem elementos
      */
     public boolean isEmpty() {
+        if (count == 0  && head == null) {
+            return true;
+        }
         return false;
     }
 
@@ -45,14 +51,17 @@ public class LinkedListOfInteger {
      * @return o numero de elementos da lista
      */
     public int size() {
-        return 0;
+        return count;
     }
 
     /**
      * Esvazia a lista.
      */
     public void clear() {
-
+       //copia tudo do construtor
+       this.head = null;
+       this.tail = null;
+       this.count = 0;
     }
 
     /**
@@ -60,7 +69,17 @@ public class LinkedListOfInteger {
      * @param element elemento a ser adicionado ao final da lista
      */
     public void add(Integer element) {
-
+        //cria um nodo com o valor do elemento
+        Node newNode = new Node(element);
+        //verifica se a lista esta vazia 
+        if (count == 0) {
+            head = newNode;
+        }
+        else{
+            tail.next = newNode; //o proximo valor após o ultimo recebe o novo nodo
+        }
+        tail = newNode; //a ultima posição passa a ser o novo nodo 
+        count++;
     }
 
     /**
@@ -70,13 +89,33 @@ public class LinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer get(int index) {
-        return null;
+        //verifica se o index é válido
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException(" Este index é invalido ");
+        }
+        //cria uma variavel que recebe o valor da primeira posição
+        Node currentNode = this.head;
+        for (int i = 0; i < index; i++) { //o for percorre até uma posição antes do index
+            currentNode = currentNode.next; //anda a lista, posição por posição
+        }
+
+        return currentNode.element; //quando chegar no index, passa o elemento 
     }
 
     @Override
     public String toString() {
-        return "";
-    }
+        StringBuilder s = new StringBuilder();
+
+        Node aux = head;
+
+        while (aux != null) {
+            s.append(aux.element.toString());
+            s.append("\n");
+            aux = aux.next;
+        }
+
+        return s.toString();
+    } 
 
     ////////////////////////////////////////////////////////////////
 
@@ -86,6 +125,15 @@ public class LinkedListOfInteger {
      * @return true se a lista contem o elemento especificado
      */
     public boolean contains(Integer element) {
+        //cria uma variavel auxliar com referencia para o primeiro elemento
+        Node auxiliaryNode = this.head;
+
+        while(auxiliaryNode != null){
+            if (auxiliaryNode.element.equals(element)) {
+                return true;
+            }
+            auxiliaryNode = auxiliaryNode.next;
+        }
         return false;
     }
 
@@ -117,7 +165,16 @@ public class LinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer set(int index, Integer element) {
-        return null;
+        Node auxiliaryNode = this.head; //variavel auxiliar que tem a referencia pro primeiro elemento
+
+        //usa o for pra chegar até a posição anterior do index
+        for (int i = 0; i < index; i++) { 
+            auxiliaryNode = auxiliaryNode.next; //caminha na lista 
+        }
+        Node previousNode = new Node(auxiliaryNode.element); //variavel que guarda o elemento a ser removido 
+        auxiliaryNode.element = element; //troca o elemento da posição do index pelo elemento passado por parametro
+        
+        return previousNode.element; //retorna o elemento antigo
     }
 
     /**
