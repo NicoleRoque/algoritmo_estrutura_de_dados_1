@@ -318,6 +318,7 @@ public class ListArrayOfInteger {
                 remove(get(j));
                 
             }
+            j++;
         }     
     }
 

@@ -244,8 +244,15 @@ public class LinkedListOfInteger {
      * @return true se a lista contem o elemento especificado
      */
     public boolean remove(Integer element) {
+        if (head == null) {
+            return false;
+        }
         if (head.element.equals(element)) {
             head = head.next;
+            // Se a lista ficou vazia
+            if (head == null) {
+                tail = null;
+            }
             count--;
             return true;
         }
@@ -254,6 +261,10 @@ public class LinkedListOfInteger {
        while (aux != null) {
         if (aux.element.equals(element)) {
             ant.next = aux.next;
+            // Se removeu o último elemento
+            if (aux == tail) {
+                tail = ant;
+            }
             count--;
             return true;
         }
@@ -380,7 +391,15 @@ public class LinkedListOfInteger {
      * @return quantidade de ocorrências do elemento
      */
     public int countOccurrences(Integer element){
-        return 0;
+        int counter = 0;
+        Node aux = this.head;
+        for (int i = 0; i < count ; i++) {
+            if (aux.element.equals(element)) {
+                counter++;
+            }
+            aux = aux.next;
+        }
+        return counter;
     }
 
     /**
@@ -389,6 +408,14 @@ public class LinkedListOfInteger {
      */
     public void unique(){
 
+        Node aux = this.head;
+        while(aux != null){ //percorre a lista enquanto o index for menor que o count
+            Node prox = aux.next; //cria uma varivel a cada repetição que guarda o a referencia para o aux.next já que ela se apaga a cada remove
+            while (countOccurrences(aux.element) > 1) { //enquanto tiver ocorrencias de numeros repetidas
+                remove(aux.element); //chamamos o metodo de remover
+            }
+            aux = prox; //o prox permite que a lista ande
+        }
     }
 
     /**
