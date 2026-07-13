@@ -184,7 +184,19 @@ public class LinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index > size())
      */
     public void add(int index, Integer element) {
-
+        //verifica se o index é válido
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Posição do index é inválido");
+        }
+        Node auxiliaryNode = this.head; //variavel auxiliar que tem a referencia pro primeiro elemento
+        Node newNode = new Node(element); //variavel que guarda o valor do elemento
+        for (int i = 0; i < index; i++) {
+            auxiliaryNode = auxiliaryNode.next; //percorre a lista
+        }
+        newNode.next = auxiliaryNode.next; //o nodo criado recebe a referencia dos proximos elementos do nodo auxiliar que tem os index
+        auxiliaryNode.next = newNode; //o proximo valor após o ultimo recebe o novo nodo
+        auxiliaryNode = newNode; //o valor do index passa a ser o novo nodo
+        count++;
     }
 
     /**
@@ -192,7 +204,38 @@ public class LinkedListOfInteger {
      * @param element elemento a ser inserido
      */
     public void addIncreasingOrder(Integer element){
+        //cria um nodo que vai guardar o elemento
+        Node mainNode = new Node(element);
 
+        //se a lista estiver vazia
+        if (head == null) {
+            head = mainNode;
+            tail = mainNode;
+            count++;
+            return;
+        } 
+        //para inserir na primeira posição
+        if (head.element >= element) {
+            mainNode.next = head;
+            head = mainNode;
+            count++;
+            return;
+        }
+
+        //cria uma variavel para antes e depois do valor que iremos inserir 
+        Node previousNode = head;
+        Node  afterNode = head.next;
+        
+        //while para percorre a lista
+        while (afterNode != null && afterNode.element < element) {
+            previousNode = afterNode; //o nodo anterior recebe o novo valor do nodo que percorre a lista a cada repetição do while
+            afterNode = afterNode.next; //o nodo percorre a lista
+        }
+
+        mainNode.next = afterNode; //o proximo do nodo principal recebe o nodo após ele 
+        previousNode.next = mainNode; //o proximo do anterior do nodo recebe o nodo
+        count++;
+        
     }
 
     /**
@@ -201,6 +244,22 @@ public class LinkedListOfInteger {
      * @return true se a lista contem o elemento especificado
      */
     public boolean remove(Integer element) {
+        if (head.element.equals(element)) {
+            head = head.next;
+            count--;
+            return true;
+        }
+       Node aux = this.head;
+       Node ant = null;
+       while (aux != null) {
+        if (aux.element.equals(element)) {
+            ant.next = aux.next;
+            count--;
+            return true;
+        }
+        ant = aux;
+        aux = aux.next;
+       }
         return false;
     }
 
@@ -212,7 +271,42 @@ public class LinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer removeByIndex(int index) {
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException ("Posição de index invalida");
+        }
+        Node removedNode = new Node(get(index));
+        Node aux = this.head;
+        if (index == 0) {
+           head = head.next;
+            
+        }
+        else{
+            if (index == count-1) {
+                for (int i = 0; i < count-2; i++) { //a lista percorre até o penultimo elemento
+                    aux = aux.next; //o aux.next vai até o ultimo
+                    }
+                    aux.next = null; //o ultimo elemento recebe null
+                    tail = aux; //e o tail recebe o penultimo elemento
+                    
+            }
+
+            else{
+                Node anterior = null; //referencia para o nodo anterior ao removido 
+                int posicao = 0; //posição que usaremos para comparar com o index
+                while (aux != null) { //percorre a lista até o ultimo elemento
+                    if (posicao == index) { //verifica se a posição é igual ao index
+                        anterior.next = aux.next; //se for o proximo do anterior recebe o proximo do pós, pulando a referencia do removido
+                    }
+                    anterior = aux; //enquanto não achou o anterior recebe o valor do aux
+                    aux = aux.next; //e o aux recebe um novo valor andando sobre a lista
+                    posicao++;
+                }
+            }
+
+        }
+
+        count--; // decerementa o count
+        return removedNode.element; 
     }
 
     /**
@@ -223,7 +317,15 @@ public class LinkedListOfInteger {
      * lista nao contem o elemento
      */
     public int indexOf(Integer element) {
-        return 0;
+        Node auxNode = this.head; //nodo que percorre a lista
+
+        for (int i = 0; i < count; i++) { //percorre toda a lista
+            if (auxNode.element.equals(element)) { //verifica se o elemento naquela posição é igual ao elemento que estou procurando
+                return i; //se for, retorna a posição
+            }
+            auxNode = auxNode.next; // se não encontrar, caminha na lista 
+        }
+        return -1;
     }
 
     /**
