@@ -352,7 +352,33 @@ public class LinkedListOfInteger {
      * @throws IllegalArgumentException se (fromIndex >= toIndex)
      */
     public Integer[] subList(int fromIndex, int toIndex) {
-        return null;
+
+        //verificações de válidade
+        if (fromIndex < 0 || toIndex > size()) {
+            throw new IndexOutOfBoundsException("O valor de index é invalido ");
+        }
+        if (fromIndex >= toIndex){
+            throw new IllegalArgumentException("FromIndex é maior que o toIndex");
+        }
+
+        //criar uma lista 
+        Integer secondList [] = new Integer [toIndex - fromIndex];
+
+        //cria uma variavel auxiliar
+        Node aux = this.head;
+        //for para caminhar na lista
+        for (int i = 0; i < fromIndex; i++) {
+            aux = aux.next;
+            
+        }
+
+        //segundo for para preencher a lista
+        for (int i = 0; i < secondList.length; i++) {
+            secondList[i] = aux.element;
+            aux = aux.next;
+        }
+
+        return secondList;
     }
 
     /**
@@ -362,7 +388,23 @@ public class LinkedListOfInteger {
      * @return true se as listas forem iguais, false caso contrario
      */
     public boolean equals(LinkedListOfInteger outra) {
-        return false;
+        //verifica se o tamanho é igual
+        if (outra.size() != this.size()) {
+            return false;
+        }
+
+        //cria uma variavel para percorrer a lista
+        Node aux = this.head;
+        //cria um index
+        int index = 0;
+        while (aux != null) {
+            if (!(outra.contains(get(index)))) {
+                return false;
+            }
+            index++;
+            aux= aux.next;
+        }
+        return true;
     }
 
     /**
@@ -371,7 +413,18 @@ public class LinkedListOfInteger {
      * @return uma nova lista contendo a intersecção das listas
      */
     public LinkedListOfInteger intersec(LinkedListOfInteger outraLista){
-        return null;
+        //cria a terceira lista
+        LinkedListOfInteger thridList = new LinkedListOfInteger();
+
+        //cria uma variavel auxiliar para percorre a lista 
+        Node aux = this.head;
+        for (int i = 0; i < this.size(); i++) {
+            if (outraLista.contains(get(i))) {
+                thridList.add(get(i));
+            }
+            aux = aux.next;
+        }
+        return thridList;
     }
 
     /**
