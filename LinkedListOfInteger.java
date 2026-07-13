@@ -143,7 +143,9 @@ public class LinkedListOfInteger {
      * @return true se o elemento estiver na lista, false caso contrário
      */
     public boolean containsRecursivo(Integer element){
-        return false;
+
+        // Inicia a busca pela posição 0 da lista
+        return containsRecursivoAux(element, 0);
     }
 
     /**
@@ -153,8 +155,22 @@ public class LinkedListOfInteger {
      * @return true se o elemento for encontrado, false caso contrário
      */
     private boolean containsRecursivoAux(Integer element, int i){
-        return false;
+
+        // Caso base: chegou ao final da lista e não encontrou o elemento
+        if (i >= count) {
+            return false;
+        }
+
+        // Verifica se o elemento da posição atual é o procurado
+        if (get(i).equals(element)) {
+            return true;
+        }
+
+        // Continua a busca na próxima posição
+        return containsRecursivoAux(element, i + 1);
     }
+
+
 
     /**
      * Substitui o elemento armazenado em uma determinada posicao da lista pelo
@@ -165,12 +181,18 @@ public class LinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer set(int index, Integer element) {
+         // Verifica se o índice é válido
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Índice inválido.");
+        }
+
         Node auxiliaryNode = this.head; //variavel auxiliar que tem a referencia pro primeiro elemento
 
         //usa o for pra chegar até a posição anterior do index
         for (int i = 0; i < index; i++) { 
             auxiliaryNode = auxiliaryNode.next; //caminha na lista 
         }
+
         Node previousNode = new Node(auxiliaryNode.element); //variavel que guarda o elemento a ser removido 
         auxiliaryNode.element = element; //troca o elemento da posição do index pelo elemento passado por parametro
         
@@ -181,21 +203,48 @@ public class LinkedListOfInteger {
      * Insere um elemento em uma determinada posicao da lista.
      * @param index a posicao da lista onde o elemento sera inserido
      * @param element elemento a ser inserido
-     * @throws IndexOutOfBoundsException se (index < 0 || index > size())
      */
     public void add(int index, Integer element) {
-        //verifica se o index é válido
+
+        // Verifica se o índice é válido
         if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("Posição do index é inválido");
+            throw new IndexOutOfBoundsException("Posição inválida.");
         }
-        Node auxiliaryNode = this.head; //variavel auxiliar que tem a referencia pro primeiro elemento
-        Node newNode = new Node(element); //variavel que guarda o valor do elemento
-        for (int i = 0; i < index; i++) {
-            auxiliaryNode = auxiliaryNode.next; //percorre a lista
+
+        Node newNode = new Node(element);
+
+        // Inserção no início
+        if (index == 0) {
+
+            newNode.next = head;
+            head = newNode;
+
+            // Se a lista estava vazia
+            if (count == 0) {
+                tail = newNode;
+            }
+
         }
-        newNode.next = auxiliaryNode.next; //o nodo criado recebe a referencia dos proximos elementos do nodo auxiliar que tem os index
-        auxiliaryNode.next = newNode; //o proximo valor após o ultimo recebe o novo nodo
-        auxiliaryNode = newNode; //o valor do index passa a ser o novo nodo
+        // Inserção no final
+        else if (index == count) {
+
+            tail.next = newNode;
+            tail = newNode;
+
+        }
+        else {
+
+            // Percorre até o nó anterior ao índice
+            Node aux = head;
+
+            for (int i = 0; i < index - 1; i++) {
+                aux = aux.next;
+            }
+
+            newNode.next = aux.next;
+            aux.next = newNode;
+        }
+
         count++;
     }
 
@@ -382,28 +431,32 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Compara o conteudo da lista com o conteudo da lista recebida por
-     * parametro.
+     * Compara o conteudo da lista com o conteudo da lista recebida.
      * @param outra
      * @return true se as listas forem iguais, false caso contrario
      */
     public boolean equals(LinkedListOfInteger outra) {
-        //verifica se o tamanho é igual
-        if (outra.size() != this.size()) {
+
+        // Se os tamanhos forem diferentes
+        if (this.size() != outra.size()) {
             return false;
         }
 
-        //cria uma variavel para percorrer a lista
-        Node aux = this.head;
-        //cria um index
-        int index = 0;
-        while (aux != null) {
-            if (!(outra.contains(get(index)))) {
+        // Percorre as duas listas simultaneamente
+        Node aux1 = this.head;
+        Node aux2 = outra.head;
+
+        while (aux1 != null) {
+
+            // Compara os elementos da mesma posição
+            if (!aux1.element.equals(aux2.element)) {
                 return false;
             }
-            index++;
-            aux= aux.next;
+
+            aux1 = aux1.next;
+            aux2 = aux2.next;
         }
+
         return true;
     }
 
@@ -428,15 +481,60 @@ public class LinkedListOfInteger {
     }
 
     /**
-     * Retorna uma nova lista contendo os elementos de duas listas
-     * em ordem crescente.
-     * @param l1 primeira lista
-     * @param l2 segunda lista
-     * @return uma nova lista com os elementos das duas listas ordenados
-     */
-    public LinkedListOfInteger merge(LinkedListOfInteger l1, LinkedListOfInteger l2){
-        return null;
-    }
+         * Retorna uma nova lista contendo os elementos de duas listas
+         * em ordem crescente.
+         * @param l1 primeira lista
+         * @param l2 segunda lista
+         * @return uma nova lista com os elementos das duas listas ordenados
+         */
+        public LinkedListOfInteger merge(LinkedListOfInteger l1, LinkedListOfInteger l2){
+
+            // Cria a lista que armazenará o resultado da junção
+            LinkedListOfInteger mergedList = new LinkedListOfInteger();
+
+            // Índices para percorrer as duas listas
+            int i = 0;
+            int j = 0;
+
+            // Percorre as duas listas enquanto ambas ainda possuem elementos
+            while (i < l1.size() && j < l2.size()) {
+
+                // Compara os elementos das duas listas
+                if (l1.get(i) <= l2.get(j)) {
+
+                    // Adiciona o menor elemento na lista resultado
+                    mergedList.add(l1.get(i));
+
+                    // Avança para o próximo elemento da primeira lista
+                    i++;
+                }
+                else {
+
+                    // Adiciona o menor elemento da segunda lista
+                    mergedList.add(l2.get(j));
+
+                    // Avança para o próximo elemento da segunda lista
+                    j++;
+                }
+            }
+
+            // Caso ainda existam elementos na primeira lista,
+            // adiciona todos eles ao final da lista resultado
+            while (i < l1.size()) {
+                mergedList.add(l1.get(i));
+                i++;
+            }
+
+            // Caso ainda existam elementos na segunda lista,
+            // adiciona todos eles ao final da lista resultado
+            while (j < l2.size()) {
+                mergedList.add(l2.get(j));
+                j++;
+            }
+
+            // Retorna a lista contendo todos os elementos ordenados
+            return mergedList;
+        }
 
     /**
      * Conta quantas vezes um determinado elemento aparece na lista.
@@ -475,14 +573,33 @@ public class LinkedListOfInteger {
      * Inverte a ordem dos elementos armazenados na lista.
      */
     public void reverse(){
+        Node start = this.head;
+        Node end = null;
+        Node aux = null;
 
+        tail = head;
+        while (start != null) {
+            aux = start.next; //guarda o proximo no do começo
+            start.next = end; //o proximo nó recebe o final
+            end = start; //o final recebe o começo
+            start = aux; //o começo recebe o aux
+        }
+        head = end;
     }
         /**
      * Retorna um array com o conteudo da lista invertido.
      * @return um arranjo contendo os elementos da lista na ordem inversa
      */
     public Integer[] getBackToFront() {
-        return null;
+
+        // Cria o vetor com o mesmo tamanho da lista
+        Integer[] vet = new Integer[count];
+
+        // Chama o método recursivo iniciando pelo primeiro nodo
+        getBackToFront(head, vet, 0);
+
+        // Retorna o vetor preenchido
+        return vet;
     }
 
     /**
@@ -493,6 +610,16 @@ public class LinkedListOfInteger {
      */
     private void getBackToFront(Node n, Integer[] vet, int i){
 
+        // Caso base: chegou ao final da lista
+        if (n == null) {
+            return;
+        }
+
+        // Primeiro vai até o último nodo
+        getBackToFront(n.next, vet, i + 1);
+
+        // Na volta da recursão coloca o elemento no vetor
+        vet[count - 1 - i] = n.element;
     }
 
     /**
@@ -503,7 +630,16 @@ public class LinkedListOfInteger {
      * @return uma nova lista contendo apenas os elementos repetidos
      */
     public LinkedListOfInteger getRepetidos(LinkedListOfInteger li){
-        return null;
+        //cria a lista 
+        LinkedListOfInteger repeatedElements = new LinkedListOfInteger();
+        //o for percorre a lista a preenchendo
+        for (int i = 0; i < li.size(); i++) {
+            //se o elemento aparece mais de uma vez na li e ainda não está contido na repeated Elements, vamos inclui-lo
+            if (li.countOccurrences(get(i)) > 1 && ! repeatedElements.contains(get(i))) { 
+                     repeatedElements.add(get(i));
+            }
+        }
+        return repeatedElements;
     }
 
 }

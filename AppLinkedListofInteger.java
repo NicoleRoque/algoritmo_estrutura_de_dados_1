@@ -34,7 +34,10 @@ public class AppLinkedListofInteger {
         listaSimples.unique();
         System.out.println("Sub lista " + java.util.Arrays.toString(listaSimples.subList(3, 5)));
         System.out.println("As duas listas são iguais? " + listaSimples.equals(listaSimples2));
-        System.out.println(listaSimples);*/
+        System.out.println(listaSimples);
         System.out.println(" Os elementos que são iguais são: \n"+ listaSimples.intersec(listaSimples2));
+        System.out.println("Cria uma lista com os elementos repetidos \n" + listaSimples2.getRepetidos(listaSimples2));*/
+        listaSimples.reverse();
+        System.out.println(listaSimples);
     }
 }
