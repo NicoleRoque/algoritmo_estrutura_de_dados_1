@@ -11,13 +11,12 @@ public class AppDoubleLinkedListOfInteger {
         listaDupla.add(60);
         listaDupla.add(70);
         //lista 2
-        listaDupla2.add(40);
-        listaDupla2.add(50);
-        listaDupla2.add(60);
-        listaDupla2.add(70);
-        listaDupla.reverse(); //funcionando
+        listaDupla.remove(10);
+        System.out.println("Retorna o elemento que foi removido da lista por index " + listaDupla.removeByIndex(5));
         System.out.println(listaDupla);
-
+        /*
+        listaDupla2.add(0, 200);//funcionando
+        // listaDupla.reverse(); //funcionando
         System.out.println("Retorna o elemento que foi trocado na lista " + listaDupla.set(6, 200));//funcionando
         System.out.println("Retorna o elemento de um determinado index: " + listaDupla.get(6));//funcionando
         System.out.println("O elemento esta na posição: " + listaDupla.indexOf(10)); //funcionando
@@ -27,7 +26,7 @@ public class AppDoubleLinkedListOfInteger {
         System.out.println("Quantas vezes um determinado número aparece na lista " + listaDupla.countOccurrences(10));//arrumar
         listaDupla.clear(); //funcionando
         System.out.println("A lista esta vazia? " + listaDupla.isEmpty()); //funcionando
-        System.out.println( "A quantidade de elementos na lista é:  " + listaDupla.size()); //funcionando
+        System.out.println( "A quantidade de elementos na lista é:  " + listaDupla.size()); //funcionando*/
         }
             /**
              * Método que recebe duas listas de inteiros por parâmetro, l1 e l2,

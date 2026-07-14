@@ -56,7 +56,28 @@ public class DoubleLinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index > size())
      */
     public void add(int index, Integer element) throws IndexOutOfBoundsException {
+        // Verifica se o índice é válido
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Posição inválida.");
+        }
+        if (count == index) {
+            add(element);
+        }
+        //criar um nodo
+        Node newNode = new Node(element);
+        //cria variavel que percorre até o index
+        Node aux = getNodeIndex(index);
 
+        //antes e depois do newNode
+        newNode.prev = aux.prev;
+        newNode.next = aux;
+
+        //depois e antes do aux
+        aux.prev.next = newNode;
+        aux.prev = newNode;
+
+        count++;
+        
     }
 
     /**
@@ -65,6 +86,16 @@ public class DoubleLinkedListOfInteger {
      * @return true se a lista contem o elemento especificado
      */
     public boolean remove(Integer element) {
+        Node aux = header.next; //percorre a lista 
+        for (int i = 0; i < count; i++) {
+            if (aux.element.equals(element)) {
+                aux.prev.next = aux.next; //(aux.prev)é o número a ser removido, o proximo dele recebe o proximo 
+                aux.next.prev = aux.prev;//(aux.next) é o proximo que recebe o anterior
+                count--;
+                return true;
+            }
+            aux = aux.next;
+        }
         return false;
     }
 
@@ -74,8 +105,18 @@ public class DoubleLinkedListOfInteger {
      * @return o elemento que foi removido da lista
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
-    public Integer removeByIndex(int index) {
-        return null;
+    public Integer removeByIndex(int index) {//ARRUMAR
+        // Verifica se o índice é válido
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Posição inválida.");
+        }
+
+        Node removido = getNodeIndex(index);
+        removido.prev.next = removido.next;
+        removido.next.prev = removido.prev;
+        count--;
+
+        return removido.element;
     }
 
     /**
