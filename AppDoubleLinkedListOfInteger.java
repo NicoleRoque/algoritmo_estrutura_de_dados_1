@@ -3,20 +3,27 @@ public class AppDoubleLinkedListOfInteger {
     public static void main(String[] args) {
         DoubleLinkedListOfInteger listaDupla = new DoubleLinkedListOfInteger();
         DoubleLinkedListOfInteger listaDupla2 = new DoubleLinkedListOfInteger();
-        listaDupla.add(10);
-        listaDupla.add(20);
-        listaDupla.add(30);
-        listaDupla.add(40);
-        listaDupla.add(50);
-        listaDupla.add(60);
-        listaDupla.add(70);
+        listaDupla.add(105);
+        listaDupla.add(201);
+        listaDupla.add(309);
+        listaDupla.add(401);
+        listaDupla.add(501);
+        listaDupla.add(601);
+        listaDupla.add(701);
         //lista 2
-        listaDupla.remove(10);
-        System.out.println("Retorna o elemento que foi removido da lista por index " + listaDupla.removeByIndex(5));
+        
+        
         System.out.println(listaDupla);
         /*
+        System.out.println("remove todos os elementos pares da lista " + listaDupla.removeEvenNumbers());//funciona
+        listaDupla.unique();//funcionando
+        System.out.println("Retorna o elemento que foi removido da lista por index " + listaDupla.removeByIndex(6));//funcionando
+        System.out.println("Quantas vezes um determinado número aparece na lista " + listaDupla.countOccurrences(10));//funcionando
+        listaDupla.remove(10); funcionando
+        System.out.println("Retorna o elemento que foi removido da lista por index " + listaDupla.removeByIndex(5));//arrumar
+        System.out.println(listaDupla);
         listaDupla2.add(0, 200);//funcionando
-        // listaDupla.reverse(); //funcionando
+        listaDupla.reverse(); //funcionando
         System.out.println("Retorna o elemento que foi trocado na lista " + listaDupla.set(6, 200));//funcionando
         System.out.println("Retorna o elemento de um determinado index: " + listaDupla.get(6));//funcionando
         System.out.println("O elemento esta na posição: " + listaDupla.indexOf(10)); //funcionando

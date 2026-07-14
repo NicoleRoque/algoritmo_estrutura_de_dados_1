@@ -41,7 +41,7 @@ public class DoubleLinkedListOfInteger {
        Node newNode = new Node(element);
       
        newNode.prev = trailer.prev;  // novo recebe as informações anteriores do ultimo
-       trailer.next = newNode;       // o ultimo passa a apontar para o novo
+       newNode.next = trailer;       // o ultimo passa a apontar para o novo
        trailer.prev.next = newNode;  // antigo último(trailer.prev) aponta para o novo (.next)
        trailer.prev = newNode;       // trailer aponta para o novo último
 
@@ -111,7 +111,12 @@ public class DoubleLinkedListOfInteger {
             throw new IndexOutOfBoundsException("Posição inválida.");
         }
 
-        Node removido = getNodeIndex(index);
+        Node removido = header.next;
+
+        for (int i = 0; i < index; i++) {
+            removido = removido.next;
+            
+        }
         removido.prev.next = removido.next;
         removido.next.prev = removido.prev;
         count--;
@@ -322,8 +327,13 @@ public class DoubleLinkedListOfInteger {
      * @return elemento da posicao corrente
      */
     public Integer next() {
+        if (current == trailer) {
+            return null;
+        }
+         Integer atual = current.element;
+         current = current.next;
          
-        return null;
+        return atual;
     }
         /**
      * Retorna uma String com o conteúdo da lista de trás para frente.
@@ -331,8 +341,17 @@ public class DoubleLinkedListOfInteger {
      * @return String contendo os elementos da lista de trás para frente
      */
     public String toStringBackToFront() {
+        Node aux = trailer.prev;
+        String nodosString = "";
 
-        return null;
+        while (aux != header) {
+            nodosString = nodosString + aux.element;
+            if (aux.prev != header) {
+                nodosString += " , "; //recebem o valor deles e uma virgula
+            }
+            aux = aux.prev;
+        }
+        return nodosString;
     }
 
     /**
@@ -340,7 +359,24 @@ public class DoubleLinkedListOfInteger {
      * deixando apenas uma ocorrência de cada elemento.
      */
     public void unique() {
-
+        Node aux = header.next; //cria um nodo para ercorre a lista
+        while (aux != trailer) { //cria um while para percorre a lista
+            Node atual = aux.next; //variavel para guardar a informação do proximo nodo de aux para ele ser removido com segurança
+            while (atual != trailer) { //percorre a lista da segunda posição adiante
+                if (aux.element.equals(atual.element)) {//compara se o primeiro elemento e todos os outros são iguais, depois o segundo... etc
+                    Node prox = atual.next; //cria uma variavel para remove o atual com segurança
+                    //remove
+                    atual.prev.next = atual.next; 
+                    atual.next.prev = atual.prev;
+                    
+                    count--; //decrementa o count
+                    atual = prox; //anda pela lista e remove novamente se for necessario
+                }else{
+                    atual = atual.next; //atual anda pela lista
+                }  
+            }
+            aux = aux.next; //aux anda pela lista
+        }
     }
 
     /**
@@ -352,7 +388,7 @@ public class DoubleLinkedListOfInteger {
      */
     public int countOccurrences(int element) {
         int contador = 0;
-        Node aux = this.header;
+        Node aux = header.next;
 
         while (aux != null) {
             if (aux.element.equals(element)) {
@@ -372,8 +408,23 @@ public class DoubleLinkedListOfInteger {
      * elementos pares e não seja feita remoção.
      */
     public boolean removeEvenNumbers() {
-        
-        return false;
+        Node aux = header.next; //variavel para percorrer a lista
+        int countComeco = count; //guarda o count do começo
+        while (aux != trailer) { //percorre a lista
+            Node atual = aux.next; //guarda o aux.next para remover o nodo com segurança
+            if ((aux.element % 2 == 0)) { //verifica se a lista possui elementos pares
+                //remove e decrementa o count
+               aux.prev.next = aux.next; 
+                aux.next.prev = aux.prev;
+                count--;
+            }
+            aux = atual; //anda na lista
+            
+        }
+        if (count ==countComeco) { //se o count não mudou é porque ninguem foir removido, retorna false
+            return false;
+        }
+        return true;
     }
 
     /**
