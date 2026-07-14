@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class AppDoubleLinkedListOfInteger {
     public static void main(String[] args) {
@@ -16,7 +15,7 @@ public class AppDoubleLinkedListOfInteger {
         listaDupla2.add(50);
         listaDupla2.add(60);
         listaDupla2.add(70);
-
+        listaDupla.reverse(); //funcionando
         System.out.println(listaDupla);
 
         System.out.println("Retorna o elemento que foi trocado na lista " + listaDupla.set(6, 200));//funcionando

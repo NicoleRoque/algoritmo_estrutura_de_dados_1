@@ -207,6 +207,22 @@ public class DoubleLinkedListOfInteger {
      * Metodo que inverte o conteudo da lista.
      */
     public void reverse() {
+        //nodos auxiliares para percorrer a lista
+        Node inicio = header.next;
+        Node fim = trailer.prev;
+
+        //percorre até metade da lista, os dois irão se encontrar no meio
+       for (int i = 0; i < count / 2; i++) {
+            //trocar apenas os elementos de lugar
+            Integer aux = inicio.element;
+            inicio.element = fim.element;
+            fim.element = aux;
+
+            //anda na lista a cada laço do for
+            inicio = inicio.next;
+            fim = fim.prev;
+        }
+
 
     }
 
@@ -265,7 +281,7 @@ public class DoubleLinkedListOfInteger {
      * @return elemento da posicao corrente
      */
     public Integer next() {
-
+         
         return null;
     }
         /**
