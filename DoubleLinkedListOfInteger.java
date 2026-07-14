@@ -47,6 +47,7 @@ public class DoubleLinkedListOfInteger {
 
 
        count++;
+       return;
     }
 
     /**
@@ -105,9 +106,9 @@ public class DoubleLinkedListOfInteger {
      * @return o elemento que foi removido da lista
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
-    public Integer removeByIndex(int index) {//ARRUMAR
+    public Integer removeByIndex(int index) {
         // Verifica se o índice é válido
-        if (index < 0 || index > size()) {
+        if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Posição inválida.");
         }
 
@@ -163,6 +164,9 @@ public class DoubleLinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer set(int index, Integer element) {
+        if(index < 0 || index >= size()){
+            throw new IndexOutOfBoundsException("Posição do index invalida");
+        }
         Node aux = header.next;
 
         for (int i = 0; i < index; i++) {
@@ -221,7 +225,7 @@ public class DoubleLinkedListOfInteger {
      */
     public boolean contains(Integer element) {
         Node aux = header.next;
-        while (aux != null) {
+        while (aux != trailer) {
             if (aux.element.equals(element)) {
                 return true;
             }
@@ -390,7 +394,7 @@ public class DoubleLinkedListOfInteger {
         int contador = 0;
         Node aux = header.next;
 
-        while (aux != null) {
+        while (aux != trailer) {
             if (aux.element.equals(element)) {
                 contador++;
             }
@@ -441,11 +445,11 @@ public class DoubleLinkedListOfInteger {
         }
 
         //cria duas variaveis, uma para cada lista
-        Node aux = this.header;
-        Node aux2 = outra.header;
+        Node aux = header.next;
+        Node aux2 = outra.header.next;
 
         //percorrer qualquer uma das listas, já que o tamanho delas é o mesmo
-        while (aux != null) {
+        while (aux != trailer) {
             if (!(aux.element.equals(aux2.element))) {
                 return false;
             }
