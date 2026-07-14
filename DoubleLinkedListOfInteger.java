@@ -37,7 +37,16 @@ public class DoubleLinkedListOfInteger {
      * @param element elemento a ser adicionado ao final da lista
      */
     public void add(Integer element) {
+       //cria um nodo que guarda o elemento
+       Node newNode = new Node(element);
+      
+       newNode.prev = trailer.prev;  // novo recebe as informações anteriores do ultimo
+       trailer.next = newNode;       // o ultimo passa a apontar para o novo
+       trailer.prev.next = newNode;  // antigo último(trailer.prev) aponta para o novo (.next)
+       trailer.prev = newNode;       // trailer aponta para o novo último
 
+
+       count++;
     }
 
     /**
@@ -76,13 +85,25 @@ public class DoubleLinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer get(int index) {
-        return null;
+        if(index < 0 || index >= size()){
+            throw new IndexOutOfBoundsException("Posição do index invalida");
+        }
+
+        Node aux = getNodeIndex(index);
+        return aux.element;
     }
 
     /**
      * Retorna uma referencia para o nodo da posicao index.
      */
     private Node getNodeIndex(int index) {
+        Node retornado = header.next;
+        for (int i = 0; i < size(); i++) {
+            if (index == i) {
+                return retornado;
+            }
+            retornado = retornado.next;
+        }
         return null;
     }
 
@@ -96,7 +117,16 @@ public class DoubleLinkedListOfInteger {
      * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
      */
     public Integer set(int index, Integer element) {
-        return null;
+        Node aux = header.next;
+
+        for (int i = 0; i < index; i++) {
+            aux = aux.next;
+        }
+        //guarda o elemento a ser trocado
+        Integer elementoTrocado = aux.element;
+        aux.element = element;
+
+        return elementoTrocado;
     }
 
     /**
@@ -112,7 +142,31 @@ public class DoubleLinkedListOfInteger {
      * @throws IllegalArgumentException se (fromIndex > toIndex)
      */
     public Integer[] subList(int fromIndex, int toIndex) {
-        return null;
+        //verificação dos indexs
+        if (fromIndex < 0 || toIndex > size()) {
+            throw new IndexOutOfBoundsException("Valor de index inválido");
+        }
+        if (fromIndex > toIndex) {
+            throw new IllegalArgumentException("O valor do index do começo é maior que o final");
+        }
+
+        //cria o vetor 
+        Integer list [] = new Integer[toIndex - fromIndex];
+
+        //cria um nodo 
+        Node aux = header.next;
+        //cria um for para percorrer a lista até a posição anterior ao fromIndex
+        for (int i = 0; i < fromIndex; i++) {
+            aux = aux.next;
+        }
+
+        //cria um for para percorrer a lista, preenchendo o vetor
+        for (int i = 0; i < list.length; i++) {
+            list[i] = aux.element;
+            aux = aux.next;
+        }
+
+        return list;
     }
         /**
      * Retorna true se a lista contem o elemento especificado.
@@ -120,7 +174,7 @@ public class DoubleLinkedListOfInteger {
      * @return true se a lista contém o elemento especificado
      */
     public boolean contains(Integer element) {
-        Node aux = this.header;
+        Node aux = header.next;
         while (aux != null) {
             if (aux.element.equals(element)) {
                 return true;
@@ -139,7 +193,7 @@ public class DoubleLinkedListOfInteger {
      * ou -1 se a lista não contém o elemento
      */
     public int indexOf(Integer element) {
-        Node aux = this.header;
+        Node aux = header.next;
         for (int i = 0; i < size(); i++) {
             if (aux.element.equals(element)) {
                 return i;
@@ -160,8 +214,8 @@ public class DoubleLinkedListOfInteger {
      * Esvazia a lista.
      */
     public void clear() {
-        header = null; //começo recebe null
-        trailer = null; //final recebe null
+        header = new Node(null); //começo recebe null
+        trailer = new Node(null); //final recebe null
         header.next = trailer; //o começo aponta para o final
         trailer.prev = header; //o final aponta pro começo
         count = 0; //zera o count
@@ -180,10 +234,7 @@ public class DoubleLinkedListOfInteger {
      * @return true se a lista não contem elementos
      */
     public boolean isEmpty() {
-        if (header.next == trailer) {
-            return true;
-        }
-        return false;
+        return (count == 0);
     }
 
     @Override
@@ -204,7 +255,7 @@ public class DoubleLinkedListOfInteger {
      * (para percorrer do inicio para o fim).
      */
     public void reset() {
-
+        current = header.next;
     }
 
     /**

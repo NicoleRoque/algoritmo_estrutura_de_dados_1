@@ -1,13 +1,34 @@
+import java.util.Arrays;
+
 public class AppDoubleLinkedListOfInteger {
     public static void main(String[] args) {
         DoubleLinkedListOfInteger listaDupla = new DoubleLinkedListOfInteger();
         DoubleLinkedListOfInteger listaDupla2 = new DoubleLinkedListOfInteger();
-        
-        System.out.println("As duas listas são iguais " + listaDupla.equals(listaDupla2));
-        System.out.println("Quantas vezes um determinado número aparece na lista " + listaDupla.countOccurrences(0));
-        listaDupla.clear(); //limpar os elementos da lista 
-        System.out.println("A lista esta vazia? " + listaDupla.isEmpty());
-        System.out.println( "A quantidade de elementos na lista é:  " + listaDupla.size());
+        listaDupla.add(10);
+        listaDupla.add(20);
+        listaDupla.add(30);
+        listaDupla.add(40);
+        listaDupla.add(50);
+        listaDupla.add(60);
+        listaDupla.add(70);
+        //lista 2
+        listaDupla2.add(40);
+        listaDupla2.add(50);
+        listaDupla2.add(60);
+        listaDupla2.add(70);
+
+        System.out.println(listaDupla);
+
+        System.out.println("Retorna o elemento que foi trocado na lista " + listaDupla.set(6, 200));//funcionando
+        System.out.println("Retorna o elemento de um determinado index: " + listaDupla.get(6));//funcionando
+        System.out.println("O elemento esta na posição: " + listaDupla.indexOf(10)); //funcionando
+        System.out.println(" Verifica se determinado elemento está na lista " + listaDupla.contains(10)); //funcionando
+        System.out.println(java.util.Arrays.toString(listaDupla.subList(3, 5))); //funcionando
+        System.out.println("As duas listas são iguais " + listaDupla.equals(listaDupla2)); //funcionando
+        System.out.println("Quantas vezes um determinado número aparece na lista " + listaDupla.countOccurrences(10));//arrumar
+        listaDupla.clear(); //funcionando
+        System.out.println("A lista esta vazia? " + listaDupla.isEmpty()); //funcionando
+        System.out.println( "A quantidade de elementos na lista é:  " + listaDupla.size()); //funcionando
         }
             /**
              * Método que recebe duas listas de inteiros por parâmetro, l1 e l2,
