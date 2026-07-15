@@ -20,8 +20,8 @@ public class QueueArray {
     public QueueArray() {
        this.fila = new Integer[20];
        this.count = 0;
-       this.primeiro = primeiro;
-       this.ultimo = ultimo;
+       this.primeiro = 0;
+       this.ultimo = 0;
     }
 
     /**
@@ -70,6 +70,9 @@ public class QueueArray {
      * @return Primeiro elemento da fila.
      */
     public Integer head() {
+        if (count == 0) {
+            throw new RuntimeException("A fila está vazia!");
+        }
         return fila[primeiro];
     }
 
@@ -100,8 +103,8 @@ public class QueueArray {
     public void clear() {
         this.fila = new Integer[20];
         this.count = 0;
-        this.primeiro = primeiro;
-        this.ultimo = ultimo;
+        this.primeiro = 0;
+        this.ultimo = 0;
     }
 
     /**
@@ -150,16 +153,16 @@ public class QueueArray {
      * @param fila2 Segunda fila.
      * @return Lista contendo a concatenação das duas filas.
      */
-    public static List<Integer> concatenarFilas(QueueArray fila1, QueueArray fila2) {//ARRUMAR
+    public static List<Integer> concatenarFilas(QueueArray fila1, QueueArray fila2) {
         List<Integer> lista = new ArrayList<Integer>();
-        int tamanho1 = fila1.count;
+        int tamanho1 = fila1.size();
+        int tamanho2 = fila2.size();
         Integer elemento1;
          for (int i = 0; i < tamanho1; i++) {
             elemento1= fila1.dequeue();
             fila1.enqueue(elemento1);
             lista.add(elemento1);
         }
-        int tamanho2 = fila2.count;
         Integer elemento2;
         for (int i = 0; i < tamanho2; i++) {
             elemento2= fila2.dequeue();
@@ -178,7 +181,23 @@ public class QueueArray {
      * @param pilha Pilha de origem.
      */
     public static void copiaParaFila(QueueArray fila, StackLinked pilha) {
-
+        
+        int tamanho = pilha.size();
+        //cria uma pilha auxiliar para armazenar os elementos
+        StackLinked aux = new StackLinked();
+        //cria uma variavel para guardar os elementos 
+        Integer elemento;
+        //for que esvazia a pilha e preenche a fila e a pilha auxiliar
+        for (int i = 0; i < tamanho; i++) {
+            elemento = pilha.pop();
+            fila.enqueue(elemento);
+            aux.push(elemento);
+        }
+        //for para esvaziar a pilha auxiliar e preencher a original
+        for (int i = 0; i < tamanho; i++) {
+            elemento = aux.pop();
+            pilha.push(elemento);
+        }
     }
 
     @Override
