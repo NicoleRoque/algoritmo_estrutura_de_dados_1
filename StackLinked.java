@@ -21,7 +21,8 @@ public class StackLinked {
          * @param e Elemento armazenado no nó.
          */
         public Node(Integer e) {
-
+            element = e;
+            next = null;
         }
     }
 
@@ -33,7 +34,8 @@ public class StackLinked {
      * Constrói uma pilha vazia.
      */
     public StackLinked() {
-
+        topo = null;
+        count = 0;
     }
 
     /**
@@ -42,14 +44,15 @@ public class StackLinked {
      * @return Número de elementos armazenados.
      */
     public int size() {
-        return 0;
+        return count;
     }
 
     /**
      * Remove todos os elementos da pilha.
      */
     public void clear() {
-
+        topo = null;
+        count = 0; 
     }
 
     /**
@@ -58,7 +61,7 @@ public class StackLinked {
      * @return true se estiver vazia; false caso contrário.
      */
     public boolean isEmpty() {
-        return false;
+        return (count == 0);
     }
 
     /**
@@ -67,7 +70,13 @@ public class StackLinked {
      * @param element Elemento a ser inserido.
      */
     public void push(Integer element) {
-
+        
+        Node inserir = new Node(element);
+            if (count > 0) {
+                inserir.next = topo; //
+            }
+            topo = inserir;
+            count++;
     }
 
     /**
@@ -77,7 +86,14 @@ public class StackLinked {
      * @throws EmptyStackException Caso a pilha esteja vazia.
      */
     public Integer pop() {
-        return null;
+        if (count == 0) {
+            throw new EmptyStackException();
+        }
+        
+        Integer elementoTopo = topo.element;
+        topo = topo.next;
+        count--;
+        return elementoTopo;
     }
 
     /**
@@ -87,7 +103,10 @@ public class StackLinked {
      * @throws EmptyStackException Caso a pilha esteja vazia.
      */
     public Integer top() {
-        return null;
+        if (count == 0) {
+            throw new EmptyStackException();
+        }
+        return topo.element;
     }
 
     /**
@@ -97,7 +116,28 @@ public class StackLinked {
      * @return Vetor contendo os elementos da pilha.
      */
     public int[] pilhaParaVetor() {
-        return null;
+        //cria uma variavel para guardar o tamanho original da pilha
+        int tamanho = this.size();
+        //criar um vetor para guardar os elementos
+        int vetor [] = new int[this.size()];
+
+        //criar uma pilha aux para guardar os elementos
+        StackLinked pilhaAux = new StackLinked();
+        //cria uma variavel auxiliar para guardar os elementos
+        Integer elemento;
+        //for que preenche a lista e a pilha auxiliar
+        for (int i = 0; i < tamanho; i++) {
+            elemento = this.pop();
+            vetor[i] = elemento;
+            pilhaAux.push(elemento);
+        }
+        
+        //cria um for para colocar os elementos na pilha original de novo
+        for (int i = 0; i < tamanho; i++) {
+            elemento = pilhaAux.pop();
+            this.push(elemento);
+        }
+        return vetor;
     }
 
     /**
@@ -107,7 +147,27 @@ public class StackLinked {
      */
     @Override
     public StackLinked clone() {
-        return null;
+        //Cria a pilha copia 
+        StackLinked pilhaCopia = new StackLinked();
+        //cria uma pilha auxiliar
+        StackLinked aux = new StackLinked();
+
+        //Cria um elemento auxiliar para preencher as lista
+        Integer elemento;
+        //cria uma variavel para guardar o tamanho original da pilha
+        int tamanho = this.size();
+        //for que preenche  a auxiliar esvaziando a original
+        for (int i = 0; i < tamanho; i++) {
+            elemento = this.pop();
+            aux.push(elemento);
+        }
+        //for para esvaziar a pilha aux e preencher a pilha original e a copia juntas
+        for (int i = 0; i < tamanho; i++) {
+            elemento = aux.pop();
+            this.push(elemento);
+            pilhaCopia.push(elemento);
+        }
+        return pilhaCopia;
     }
 
     /**
@@ -118,6 +178,45 @@ public class StackLinked {
      * @param pilha Pilha de origem.
      */
     public static void copiaParaLista(DoubleLinkedListOfInteger lista, StackLinked pilha) {
+        //cria a pilha auxiliar
+        StackLinked aux = new StackLinked();
+        //Cria um elemento auxiliar para preencher as lista
+        Integer elemento;
+        //cria uma variavel para guardar o tamanho original da pilha
+        int tamanho = pilha.size();
+        //for que vai esvaziar a pilha original e preencher a lista e a pilha auxiliar
+        for (int i = 0; i < tamanho; i++) {
+            elemento = pilha.pop();
+            aux.push(elemento);
+            lista.add(elemento);
+        }
+        //for pra esvaziar pilha auxiliar e preencher a pilha original
+        for (int i = 0; i < tamanho; i++) {
+            elemento = aux.pop();
+            pilha.push(elemento);
+        }
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Topo -> ");
+
+        Node aux = topo;
+
+        while (aux != null) {
+            sb.append(aux.element);
+
+            if (aux.next != null) {
+                sb.append(" -> ");
+            }
+
+            aux = aux.next;
+        }
+
+        sb.append(" -> null");
+
+        return sb.toString();
     }
 }
