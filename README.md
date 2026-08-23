@@ -8,7 +8,7 @@ O objetivo é documentar minha evolução na resolução de problemas utilizando
 
 * Lógica de programação
 * Análise de algoritmos
-* Vetores e matrizes
+* Vetores 
 * Listas simplesmente encadeadas
 * Listas duplamente encadeadas
 * Pilhas (Stacks)
