@@ -13,12 +13,6 @@ O objetivo é documentar minha evolução na resolução de problemas utilizando
 * Listas duplamente encadeadas
 * Pilhas (Stacks)
 * Filas (Queues)
-* Árvores genéricas
-* Árvores binárias
-* Percursos em árvores (pré-ordem, em ordem, pós-ordem e largura)
-* Operações de inserção, remoção e busca
-* Recursão
-* Manipulação de ponteiros e referências
 * Complexidade de algoritmos
 
 Cada exercício foi desenvolvido com foco no entendimento dos conceitos e na prática da implementação manual das estruturas de dados, fortalecendo a base necessária para disciplinas mais avançadas e para o desenvolvimento de software.
