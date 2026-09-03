@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class BinarySearchTreeOfInteger{
     //final significa que o elemento é constante e não pode ser alterado
     //é o static cria apenas uma cópia da variável na memoria, se um objeto altera o valor, todos os outros veem a mudança.
@@ -49,4 +51,70 @@ public class BinarySearchTreeOfInteger{
         return count;
     }
 
+    /**
+     * Retorna o elemento armazenado na raiz da arvore.
+     * Lanca excessao se a arvore estiver vazia.
+     * @return elemento da raiz
+     */
+    public Integer getRoot() {
+        if (root == null) {
+         throw new IllegalArgumentExcepcion("A arvore está vazia ");
+        }
+        return root.element;
+    }
+
+    // Procura recursivamente pelo nodo que contem o elemento 
+    // informado, a partir do nodo alvo especificado
+    private Node searchNodeRef(Integer element, Node target) {
+        Node noAtual = root;
+        if (target == null) {
+            return null;
+        }
+        else if (target.element == element) {
+            return target;
+        }
+
+        
+        return null;
+    }
+    
+    /**
+     * Retorna o valor armazenado no filho esquerdo do nodo 
+     * que contem o elemento passado por parametro.
+     * @param element a ser localizado na arvore
+     * @return valor do filho esquerdo do nodo correspondente 
+     * ao elemento, ou null caso o nodo nao possua filho esquerdo
+     * @throws NoSuchElementException() se element nao for 
+     * encontrado na arvore
+     */
+    public Integer getLeft(Integer element) {
+
+        return null;
+    }
+
+     /**
+     * Retorna o valor armazenado no filho direito do nodo 
+     * que contem o elemento passado por parametro.
+     * @param element a ser localizado na arvore
+     * @return valor do filho direito do nodo correspondente 
+     * ao elemento, ou null caso o nodo nao possua filho direito
+     * @throws NoSuchElementException() se element nao for 
+     * encontrado na arvore
+     */    
+    public Integer getRight(Integer element) {
+        return null;
+    }
+
+    /**
+     * Retorna o valor armazenado no pai do nodo que contem
+     * o elemento passado por parametro.
+     * @param element a ser localizado na arvore
+     * @return valor do pai do nodo correspondente ao elemento, 
+     * ou null caso o nodo nao possua pai
+     * @throws NoSuchElementException() se element nao for 
+     * encontrado na arvore
+     */    
+    public Integer getParent(Integer element) {
+        return null;
+    }
 }
