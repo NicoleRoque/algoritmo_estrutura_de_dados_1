@@ -5,17 +5,17 @@ import java.util.LinkedList;
  */
 public class BinarySearchTreeOfInteger {
 
-    private static final class Node {
+    private static final class Node { //classe nodo, ela é final porque não pode ser herdada
 
-        public Node father;
-        public Node left;
-        public Node right;
-        public Integer element;
+        public Node father; //nodo pai
+        public Node left; //filho da esquerda
+        public Node right; //filho da direita
+        public Integer element; //elemento de dentro do nodo
 
-        public Node(Integer element) {
-            father = null;
-            left = null;
-            right = null;
+        public Node(Integer element) { //metodo construtor da classe nodo, inicializa os elementos com null
+            this.father = null;
+            this.left = null;
+            this.right = null;
             this.element = element;
         }
     }
@@ -27,43 +27,51 @@ public class BinarySearchTreeOfInteger {
     /**
      * Metodo construtor.
      */
-    public BinarySearchTreeOfInteger() {
-        // Inicializa a árvore
+    public BinarySearchTreeOfInteger() {//testar
+        // Inicializa a árvore, o this serve para se referir ao objeto atual que esta referenciando o método construtor 
+        this.count = 0;
+        this.root = null;
     }
 
     /**
      * Remove todos os elementos da arvore.
      */
-    public void clear() {
-        // Remove todos os elementos da árvore
+    public void clear() {//testar
+       count = 0;
+       root = null;
+
     }
 
     /**
      * Verifica se a arvore esta vazia ou nao.
      * @return true se a arvore esta vazia e false caso contrario
      */
-    public boolean isEmpty() {
-        // Verifica se a raiz é nula
-        return false;
+    public boolean isEmpty() {//testar
+        // Verifica se a raiz é nula, se for retorna true 
+        return (root == null);
     }
 
     /**
      * Retorna o total de elementos da arvore.
      * @return quantidade de elementos
      */
-    public int size() {
+    public int size() { //testar
         // Retorna a quantidade de nodos
-        return 0;
+        return count;
     }
 
     /**
      * Retorna o elemento armazenado na raiz da arvore.
      * @return elemento da raiz
      */
-    public Integer getRoot() {
+    public Integer getRoot() {//testar
         // Verifica se a árvore está vazia
+        if (isEmpty()) {
+            throw IllegalArgumentException ("A raiz esta vazia");
+        }
+        else
         // Retorna o elemento da raiz
-        return null;
+        return root.element;
     }
 
     // obj1.compareTo(obj2)
@@ -72,22 +80,37 @@ public class BinarySearchTreeOfInteger {
     // se obj1 < obj2, retorna um numero menor que 0
 
     /**
-     * Insere um elemento na arvore de forma nao recursiva.
+     * Insere um elemento na arvore de forma  recursiva.
      * @param element elemento a ser inserido
      */
     public void add(Integer element) {
-        // Verifica se o elemento é válido
-        // Localiza a posição onde o elemento será inserido
-        // Atualiza o pai e os filhos
+        this.root = addRec(this.root, element);
     }
 
     /**
      * Insere um elemento na arvore de forma recursiva.
      * @param element elemento a ser inserido
      */
-    public void addRec(Integer element) {
-        // Insere o elemento utilizando recursão
-        // Atualiza o contador
+    public Node addRec(Node n, Integer element) {
+        // Se o nó atual for nulo, encontramos o lugar vazio!
+        // Criamos o novo nó e incrementamos o contador aqui.
+        if(n == null){
+            count++;
+             return new Node(element);
+    }
+         // 2. PASSO RECURSIVO: Compara com o nó ATUAL 'n'
+        else if(element > root.element){
+             // Vai para a direita e conecta o resultado de volta no lado direito
+            n.right = addRec(n.right, element);;
+        }
+        else if (element < root.element){
+            // Vai para a esquerda e conecta o resultado de volta no lado esquerdo
+            n.left = addRec(n.left, element);;
+        }
+
+        // Se element == n.element, não faz nada
+         // Retorna o próprio nó 'n' para manter a árvore conectada
+        return n;
     }
 
     /**
