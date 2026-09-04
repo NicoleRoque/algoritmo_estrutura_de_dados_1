@@ -83,7 +83,7 @@ public class BinarySearchTreeOfInteger {
      * Insere um elemento na arvore de forma  recursiva.
      * @param element elemento a ser inserido
      */
-    public void add(Integer element) {
+    public void add(Integer element) { //testar
         this.root = addRec(this.root, element);
     }
 
@@ -91,7 +91,7 @@ public class BinarySearchTreeOfInteger {
      * Insere um elemento na arvore de forma recursiva.
      * @param element elemento a ser inserido
      */
-    public Node addRec(Node n, Integer element) {
+    public Node addRec(Node n, Integer element) {//testar
         // Se o nó atual for nulo, encontramos o lugar vazio!
         // Criamos o novo nó e incrementamos o contador aqui.
         if(n == null){
