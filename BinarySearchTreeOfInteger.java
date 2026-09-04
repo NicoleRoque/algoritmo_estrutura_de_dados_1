@@ -67,7 +67,7 @@ public class BinarySearchTreeOfInteger {
     public Integer getRoot() {//testar
         // Verifica se a árvore está vazia
         if (isEmpty()) {
-            throw IllegalArgumentException ("A raiz esta vazia");
+            throw new IllegalArgumentException ("A raiz esta vazia");
         }
         else
         // Retorna o elemento da raiz
@@ -371,5 +371,20 @@ public class BinarySearchTreeOfInteger {
         // Percorre a árvore
         // Verifica se cada nodo possui 0 ou 2 filhos
         return false;
+    }
+
+
+    // MÉTODO DE AJUDA PARA O TESTE: Caminhamento Em-Ordem (Esquerda, Raiz, Direita)
+    public void exibirEmOrdem() {
+        exibirEmOrdemRec(this.root);
+        System.out.println(); // Quebra de linha no final
+    }
+
+    private void exibirEmOrdemRec(Node n) {
+        if (n != null) {
+            exibirEmOrdemRec(n.left);          // 1. Visita toda a esquerda
+            System.out.print(n.element + " "); // 2. Printa o nó atual
+            exibirEmOrdemRec(n.right);         // 3. Visita toda a direita
+        }
     }
 }
