@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
  * Classe de arvore binaria de pesquisa de numeros inteiros.
@@ -7,10 +8,10 @@ public class BinarySearchTreeOfInteger {
 
     private static final class Node { //classe nodo, ela é final porque não pode ser herdada
 
-        public Node father; //nodo pai
-        public Node left; //filho da esquerda
-        public Node right; //filho da direita
-        public Integer element; //elemento de dentro do nodo
+        private Node father; //nodo pai
+        private Node left; //filho da esquerda
+        private Node right; //filho da direita
+        private Integer element; //elemento de dentro do nodo
 
         public Node(Integer element) { //metodo construtor da classe nodo, inicializa os elementos com null
             this.father = null;
@@ -27,7 +28,7 @@ public class BinarySearchTreeOfInteger {
     /**
      * Metodo construtor.
      */
-    public BinarySearchTreeOfInteger() {//testar
+    public BinarySearchTreeOfInteger() {
         // Inicializa a árvore, o this serve para se referir ao objeto atual que esta referenciando o método construtor 
         this.count = 0;
         this.root = null;
@@ -97,9 +98,10 @@ public class BinarySearchTreeOfInteger {
         if(n == null){
             count++;
              return new Node(element);
+
     }
          // 2. PASSO RECURSIVO: Compara com o nó ATUAL 'n'
-        else if(element > root.element){
+        else if(element > n.element){
              // Vai para a direita e conecta o resultado de volta no lado direito
             n.right = addRec(n.right, element);;
         }
@@ -121,9 +123,29 @@ public class BinarySearchTreeOfInteger {
      * ao elemento, ou null caso o nodo nao possua filho esquerdo
      */
     public Integer getLeft(Integer element) {
-        // Localiza o nodo que contém o elemento
-        // Verifica se possui filho esquerdo
-        return null;
+        //cria um nodo auxiliar para percorrer a arvore, ele começa na raiz
+        Node aux = root;
+        //repete enquanto aux for diferente de null
+        while(aux != null){
+            //verifica se o valor do elemento de aux é igual o elemento passado por parametro a cada repetição
+            if (aux.element.equals(element)) {
+                //verifica se o elemento tem filhos
+                if(aux.left == null){
+                    return null; //se não tiver retorna null
+                }
+                return aux.left.element; //se não for nulo exibe o filho esquerda
+            }
+            //se o elemento for menor que o elemento do nodo auxiliar vai pra esquerda
+            if (element < aux.element) {
+                aux = aux.left; //andando para a esquerda
+            }
+            else //se o elemento for maior que o elemento do nodo auxiliar vai pra direita
+                aux = aux.right; //andando para a direita
+        }
+        //se o elemento não existir na árvore lança uma exceção
+        throw new NoSuchElementException("Este elemento não existe na árvore");
+        
+        
     }
 
     /**
@@ -134,9 +156,24 @@ public class BinarySearchTreeOfInteger {
      * ao elemento, ou null caso o nodo nao possua filho direito
      */
     public Integer getRight(Integer element) {
-        // Localiza o nodo que contém o elemento
-        // Verifica se possui filho direito
-        return null;
+        //cria uma variavel para percorrer a arvore que inicia na raiz
+        Node aux = root;
+        while(aux != null){
+            if (aux.element.equals(element)) {
+                if (aux.right == null) {
+                    return null;
+                }
+                 return aux.right.element;
+            }
+            
+            if (element < aux.element) {
+                aux = aux.left;
+            }
+            else 
+                aux = aux.right;
+        }
+        //se o elemento não existir na árvore lança uma exceção
+        throw new NoSuchElementException("Este elemento não existe na árvore");
     }
 
     /**
@@ -147,9 +184,27 @@ public class BinarySearchTreeOfInteger {
      * ou null caso o nodo nao possua pai
      */
     public Integer getParent(Integer element) {
-        // Localiza o nodo que contém o elemento
-        // Verifica se possui pai
-        return null;
+       
+
+        Node aux = root;
+        
+        while(aux != null){
+            if (element.equals(aux.element)) {
+                if(aux.father == null){
+                    return null;
+                }
+                return aux.father.element;
+            }
+
+            if (element < aux.element) {
+                aux = aux.left;
+            }
+            if(element > aux.element){
+                aux = aux.right;
+            }
+        }
+        //se o elemento não existir na árvore lança uma exceção
+        throw new NoSuchElementException("Este elemento não existe na árvore");
     }
 
     /**
@@ -160,15 +215,34 @@ public class BinarySearchTreeOfInteger {
      */
     public boolean contains(Integer element) {
         // Procura o elemento na árvore
+        Node aux = this.root;
+        while (aux != null) {
+            if(aux.element.equals(element)){
+                return true;
+            }
+            if (element > aux.element) {
+                aux = aux.right;
+            }
+            else aux = aux.left;
+        }
         return false;
     }
 
+    public Node searchNodeRef(Integer element){
+        return searchNodeRef(element, root);
+    }
     // Procura recursivamente pelo nodo que contem o elemento
     // informado, a partir do nodo alvo especificado
     private Node searchNodeRef(Integer element, Node target) {
-        // Compara o elemento com o nodo atual
-        // Continua a busca pela esquerda ou direita
-        return null;
+        
+            if (element.equals(target.element)) {
+                return target;
+            }
+            else if (element > target.element) 
+               return searchNodeRef(element, target.right);
+            
+            else return searchNodeRef(element, target.left);
+        
     }
 
     /**
@@ -186,8 +260,14 @@ public class BinarySearchTreeOfInteger {
 
     // Retorna o menor elemento da subarvore do nodo
     // passado por parametro.
-    private Node smallest(Node n) {
+    private Node smallest(Node n) { //testar
         // Caminha pelos filhos esquerdos
+        while (n != null) {
+            if (n.left == null) {
+                return n;
+            }
+            else n = n.left;
+        }
         return null;
     }
 
@@ -198,9 +278,12 @@ public class BinarySearchTreeOfInteger {
      * @return elemento anteriormente armazenado no nodo,
      * ou null caso o elemento informado nao seja encontrado
      */
-    public Integer set(Integer old, Integer element) {
-        // Localiza o nodo
-        // Substitui o elemento
+    public Integer set(Integer old, Integer element) { //não deveria existir pois desbalanceia a arvore
+        if(searchNodeRef(old) != null){
+            old = element;
+            return old;
+        }
+
         return null;
     }
 
@@ -211,9 +294,13 @@ public class BinarySearchTreeOfInteger {
      * @return true se o nodo for externo e false caso contrario
      */
     public boolean isExternal(int element) {
-        // Localiza o nodo
-        // Verifica se não possui filhos
-        return false;
+        
+            Node n = searchNodeRef(element);
+            if (n == null) 
+                return false;
+            
+            return (n.left == null && n.right == null);
+        
     }
 
     /**
@@ -223,9 +310,13 @@ public class BinarySearchTreeOfInteger {
      * @return true se o nodo for interno e false caso contrario
      */
     public boolean isInternal(int element) {
-        // Localiza o nodo
-        // Verifica se possui pelo menos um filho
-        return false;
+        
+            Node n = searchNodeRef(element);
+            if (n == null) 
+                return false;
+            
+            return (n.left != null || n.right != null);
+        
     }
 
     /**
@@ -324,9 +415,15 @@ public class BinarySearchTreeOfInteger {
      * @return maior elemento da árvore
      */
     public Integer getBiggest() {
-        // Localiza o maior nodo da árvore
-        // O maior elemento está no caminho mais à direita
-        return null;
+        if (root == null) {
+            return null;
+        }
+        Node aux = root;
+        while (aux.right != null){
+            aux = aux.right;
+           
+        }
+        return aux.element;
     }
 
     /**
@@ -335,8 +432,18 @@ public class BinarySearchTreeOfInteger {
      */
     public int countLeaves() {
         // Percorre a árvore
+        int contador = 0;
+        Node aux = root;
+        while(aux != null){
+            if (aux.right == null) {
+                contador++;
+            }
+            if (aux.left == null) {
+                contador++;
+            }
+        }
         // Conta os nodos que não possuem filhos
-        return 0;
+        return contador;
     }
 
     /**
