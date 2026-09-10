@@ -271,21 +271,6 @@ public class BinarySearchTreeOfInteger {
         return null;
     }
 
-    /**
-     * Substitui o elemento armazenado em um nodo da arvore.
-     * @param old elemento atualmente armazenado no nodo
-     * @param element novo elemento que sera armazenado
-     * @return elemento anteriormente armazenado no nodo,
-     * ou null caso o elemento informado nao seja encontrado
-     */
-    public Integer set(Integer old, Integer element) { //não deveria existir pois desbalanceia a arvore
-        if(searchNodeRef(old) != null){
-            old = element;
-            return old;
-        }
-
-        return null;
-    }
 
     /**
      * Verifica se o nodo que contem o elemento informado eh
@@ -426,24 +411,22 @@ public class BinarySearchTreeOfInteger {
         return aux.element;
     }
 
+    public int countLeaves(){
+        return countLeaves(root);
+    }
     /**
      * Retorna a quantidade de folhas da árvore.
      * @return quantidade de folhas
      */
-    public int countLeaves() {
-        // Percorre a árvore
-        int contador = 0;
-        Node aux = root;
-        while(aux != null){
-            if (aux.right == null) {
-                contador++;
-            }
-            if (aux.left == null) {
-                contador++;
-            }
-        }
-        // Conta os nodos que não possuem filhos
-        return contador;
+    private int countLeaves(Node n) {
+       if (n == null) {
+        return 0;
+       }
+       if (n.left == null && n.right == null) {
+        return 1;
+       }
+
+       return(countLeaves(n.left) + countLeaves(n.right));
     }
 
     /**
